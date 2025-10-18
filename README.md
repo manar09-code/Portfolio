@@ -9,9 +9,9 @@ The project was developed using **HTML, CSS, and Bootstrap**, and versioned with
 ## 🧩 Project Description
 
 The website includes:
-- A homepage introducing who I am.  
-- An "About" section with a downloadable CV.  
-- A "Projects" section showcasing my work.  
+- A homepage introducing who I am breifly with links for details.  
+- An About page with box section showcasing my work.  
+- A Resume page containing my resume.  
 - A footer with contact information and social links.  
 
 The goal of this project was to apply web development and Git version control concepts to build and publish a personal website.
@@ -37,6 +37,6 @@ GitHub Repository:
 ---
 
 ## 👩‍💻 Author
-**Manar Dgachi**  
+**Manar Degachi**  
 IT Student – ISET Tozeur 
 *Academic Year 2025/2026*
