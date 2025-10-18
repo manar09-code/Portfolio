@@ -1,0 +1,77 @@
+
+body{
+  background-color: #000000;
+  text-align: center;
+  font-family: 'roboto' ,Arial ,sans-serif;
+}
+
+.container{
+  display:flex; /* puts image and text side by side */
+  align-items:center; /* centers them vertically */
+  justify-content:center; /* centers both horizontally */
+  gap :20px;
+  height: 100vh;
+}
+
+.circle-image{
+  border-radius: 50%;
+  overflow: hidden;
+  width: 200px;
+  height: 150px;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 20px rgba(255, 255, 255,0.3);
+  transition: box-shadow 0.5s ease;
+  animation: fadeInUp 1.5s ease-in-out;
+
+}
+
+.circle-image :hover{
+  box-shadow: 0 0 40px rgba(255,255,255,0.6);
+}
+
+.text-section{
+  text-align: center;
+  animation: fadeInUp 1.5s ease-in-out;
+}
+
+h1{
+  text-align: center;
+  color: rgb(255, 255, 255);
+  margin-bottom: 8px;
+}
+
+p{
+  color: #afaeb4;
+  margin: 0;
+}
+
+nav{
+  margin-top: 15px;
+  color: rgb(255, 255, 255);
+  display:flex;
+  justify-content: center;
+}
+
+nav a:hover {
+      color: #86acc0; 
+    }
+
+a{
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  margin: 0 10px;
+  transition: color 0.3s ease;
+}    
+
+a:hover{
+  color:#86acc0
+}
+
+@keyframes fadeInUp {
+  from{
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  
+}
+
