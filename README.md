@@ -1,6 +1,6 @@
 # 🌐 Personal Portfolio
 
-This is my personal portfolio website created as part of the **Mini Project – Développement d’un Portfolio Personnel** at **ISET Tataouine** for the academic year **2025/2026**.
+This is my personal portfolio website created as part of the **Mini Project – Développement d’un Portfolio Personnel** at **ISET Tozeur** for the academic year **2025/2026**.
 
 The project was developed using **HTML, CSS, and Bootstrap**, and versioned with **Git** through multiple branches for each sprint.
 
