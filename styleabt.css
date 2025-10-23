@@ -44,15 +44,22 @@ body {
   }
 }
 
-/* CARDS AND BOXES HOVER EFFECT */
+/* CARDS AND BOXES */
 .card, .col-md-6 > div {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #000; /* black background */
+  color: #fff;            /* white text */
+  padding: 20px;          /* optional spacing inside the boxes */
+  border-radius: 10px;    /* rounded corners if you like */
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1); /* subtle shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
+/* HOVER EFFECT */
 .card:hover, .col-md-6 > div:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
 }
+
 
 /* LINKS */
 a {

@@ -1,21 +1,31 @@
+/* BODY */
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: #f5f5f5;
+  background-color: #000; /* black background */
+  color: #fff;            /* white text */
+  margin: 0;
+  padding: 0;
 }
 
+/* RESUME SECTION */
 .resume-section {
-  background-color: #fff;
+  background-color: #111; /* dark black/gray for the boxes */
+  color: #fff;            /* white text inside */
   border-radius: 10px;
   padding: 40px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1); /* subtle light shadow */
 }
 
 .resume-section h1 {
   font-weight: bold;
+  color: #fff; /* make sure headings are white */
 }
 
+/* RESUME VIEWER */
 .resume-viewer iframe {
   border-radius: 5px;
+  background-color: #000; /* optional: make iframe background black too */
+  color: #fff;
 }
 
 /* FOOTER */
@@ -34,6 +44,6 @@ footer a {
 
 footer a:hover {
   color: #d2bc3c;
-  text-decoration:solid;
+  text-decoration: solid;
   transition: 0.3s;
 }
