@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manar Degachi — Full-Stack Web Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;0,700;0,900;1,300;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════ */
+:root {
+  --void:    #020810;
+  --deep:    #04101f;
+  --navy:    #071528;
+  --card:    rgba(7,21,40,.78);
+  --card2:   rgba(10,28,54,.6);
+  --blue:    #4da8ff;
+  --blue2:   #1a78d4;
+  --sky:     #93c5fd;
+  --indigo:  #818cf8;
+  --gold:    #d4a853;
+  --mist:    rgba(147,197,253,.5);
+  --text:    #e8f0ff;
+  --body:    rgba(232,240,255,.72);
+  --muted:   rgba(232,240,255,.38);
+  --dim:     rgba(232,240,255,.2);
+  --border:  rgba(77,168,255,.16);
+  --border2: rgba(255,255,255,.07);
+  --glow:    rgba(77,168,255,.2);
+  --display: 'Cormorant Garamond', serif;
+  --sans:    'DM Sans', sans-serif;
+  --mono:    'DM Mono', monospace;
+  --r:       14px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--void);color:var(--text);overflow-x:hidden;line-height:1.7;}
+::selection{background:rgba(77,168,255,.25);}
+img{display:block;max-width:100%;}
+a{color:inherit;text-decoration:none;}
+
+/* ─── STAR CANVAS ─── */
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
+
+/* ─── GRAIN ─── */
+body::after{
+  content:'';position:fixed;inset:0;z-index:1;pointer-events:none;
+  opacity:.022;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ═══════════════════════════════════════
+   NAV
+═══════════════════════════════════════ */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.4rem clamp(1.5rem,5vw,4rem);
+  background:rgba(2,8,16,.85);backdrop-filter:blur(28px);
+  border-bottom:1px solid var(--border2);transition:padding .3s;
+}
+.nav-logo{font-family:var(--display);font-size:1.7rem;font-weight:700;letter-spacing:-.02em;color:var(--blue);}
+.nav-links{display:flex;gap:2.4rem;list-style:none;align-items:center;flex-wrap:nowrap;overflow-x:auto;}
+.nav-links a{font-family:var(--sans);font-size:.75rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transition:color .2s;}
+.nav-links a:hover{color:var(--blue);}
+.nav-cv{
+  display:inline-flex;align-items:center;gap:.4rem;
+  background:rgba(77,168,255,.1);border:1px solid rgba(77,168,255,.3);
+  color:var(--blue);font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:.32rem .9rem;border-radius:6px;transition:.2s;
+}
+.nav-cv:hover{background:var(--blue);color:var(--void);}
+
+/* ═══════════════════════════════════════
+   HERO
+═══════════════════════════════════════ */
+#hero{
+  min-height:100vh;position:relative;z-index:2;
+  display:flex;align-items:center;
+  padding:clamp(6.5rem,12vh,8.5rem) clamp(1.5rem,5vw,4rem) clamp(3rem,6vh,5rem);
+  overflow:hidden;
+}
+.orb{position:absolute;border-radius:50%;filter:blur(110px);pointer-events:none;}
+.o1{width:750px;height:750px;background:radial-gradient(circle,rgba(20,70,200,.13),transparent 70%);top:-180px;right:-120px;animation:drift 22s ease-in-out infinite alternate;}
+.o2{width:500px;height:500px;background:radial-gradient(circle,rgba(77,168,255,.07),transparent 70%);bottom:-100px;left:-80px;animation:drift 18s ease-in-out infinite alternate-reverse;}
+.o3{width:300px;height:300px;background:radial-gradient(circle,rgba(129,140,248,.06),transparent 70%);top:40%;left:38%;animation:drift 14s ease-in-out infinite alternate;}
+@keyframes drift{0%{transform:translate(0,0)}100%{transform:translate(55px,38px)}}
+
+.hero-grid{display:grid;grid-template-columns:1.1fr 1fr;align-items:center;gap:clamp(2rem,5vw,5rem);max-width:1200px;margin:0 auto;width:100%;}
+
+.h-badge{
+  display:inline-flex;align-items:center;gap:.55rem;
+  background:rgba(77,168,255,.07);border:1px solid rgba(77,168,255,.22);
+  color:var(--blue);font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:.34rem 1rem;border-radius:100px;margin-bottom:1.8rem;margin-top:.5rem;
+  animation:fadeUp .8s .1s both;
+}
+.bdot{width:6px;height:6px;border-radius:50%;background:var(--blue);animation:pulse 2.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.25;transform:scale(1.6)}}
+
+.hero-name{font-family:var(--display);font-size:clamp(3.5rem,7.5vw,6.8rem);font-weight:900;line-height:.96;letter-spacing:-.04em;margin-bottom:.45rem;animation:fadeUp .9s .2s both;}
+.hero-name .cursive{font-style:italic;font-weight:300;display:block;background:linear-gradient(130deg,var(--blue) 0%,var(--indigo) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+.typed-row{display:flex;align-items:center;gap:.45rem;font-family:var(--mono);font-size:clamp(.78rem,1.4vw,.92rem);color:var(--muted);margin-bottom:1.8rem;animation:fadeUp .9s .35s both;}
+.typed-prefix{color:var(--blue);}
+#typed{color:var(--blue);min-width:200px;font-weight:500;}
+.typed-cur{color:var(--blue);animation:blink 1s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+.hero-desc{font-size:clamp(.88rem,1.4vw,1.02rem);color:var(--body);max-width:490px;line-height:1.92;margin-bottom:2.5rem;animation:fadeUp .9s .5s both;}
+.hero-desc strong{color:var(--text);font-weight:600;}
+
+.hero-btns{display:flex;gap:.9rem;flex-wrap:wrap;margin-bottom:3rem;animation:fadeUp .9s .65s both;}
+.btn-primary{display:inline-flex;align-items:center;gap:.5rem;background:var(--blue);color:var(--void);font-family:var(--sans);font-size:.85rem;font-weight:700;padding:.88rem 2rem;border-radius:7px;border:none;cursor:pointer;text-decoration:none;transition:background .2s,transform .2s,box-shadow .2s;}
+.btn-primary:hover{background:var(--blue2);transform:translateY(-3px);box-shadow:0 14px 40px rgba(77,168,255,.3);}
+.btn-outline{display:inline-flex;align-items:center;gap:.5rem;border:1px solid rgba(255,255,255,.15);color:var(--text);font-family:var(--sans);font-size:.85rem;font-weight:500;padding:.88rem 2rem;border-radius:7px;text-decoration:none;transition:border-color .2s,color .2s,transform .2s;}
+.btn-outline:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-3px);}
+.btn-cv{display:inline-flex;align-items:center;gap:.5rem;border:1px solid rgba(212,168,83,.35);color:var(--gold);font-family:var(--sans);font-size:.85rem;font-weight:500;padding:.88rem 2rem;border-radius:7px;text-decoration:none;transition:border-color .2s,color .2s,transform .2s,background .2s;}
+.btn-cv:hover{border-color:var(--gold);background:rgba(212,168,83,.1);transform:translateY(-3px);}
+
+.hero-kpis{display:flex;gap:clamp(1.4rem,4vw,2.8rem);padding-top:2rem;border-top:1px solid var(--border2);animation:fadeUp .9s .8s both;}
+.kpi-v{font-family:var(--display);font-size:clamp(1.9rem,3.5vw,2.7rem);font-weight:700;color:var(--blue);line-height:1;margin-bottom:.22rem;}
+.kpi-l{font-family:var(--mono);font-size:.65rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+.hero-photo{position:relative;z-index:1;display:flex;justify-content:center;align-items:center;animation:fadeLeft 1s .4s both;}
+@keyframes fadeLeft{from{opacity:0;transform:translateX(36px)}to{opacity:1;transform:translateX(0)}}
+
+.photo-stack{position:relative;width:clamp(230px,30vw,360px);height:clamp(290px,38vw,450px);}
+.photo-ring{position:absolute;inset:-2px;border-radius:22px;background:linear-gradient(140deg,rgba(77,168,255,.65),transparent 50%,rgba(129,140,248,.4));animation:ringGlow 4s ease-in-out infinite alternate;}
+@keyframes ringGlow{0%{opacity:.7}100%{opacity:1;transform:scale(1.008)}}
+.photo-img{position:absolute;inset:0;border-radius:20px;overflow:hidden;}
+.photo-img img{width:100%;height:100%;object-fit:cover;}
+.photo-echo{position:absolute;top:14px;left:14px;right:-14px;bottom:-14px;border-radius:22px;border:1px solid rgba(77,168,255,.1);z-index:-1;}
+
+.chip{position:absolute;background:rgba(4,16,31,.92);backdrop-filter:blur(16px);border:1px solid rgba(77,168,255,.24);border-radius:11px;padding:.68rem 1rem;font-family:var(--mono);font-size:.72rem;box-shadow:0 8px 30px rgba(0,0,0,.5);}
+.chip-1{bottom:28px;left:-82px;animation:chipFloat 6s ease-in-out infinite;}
+.chip-2{top:36px;right:-74px;animation:chipFloat 6s 3s ease-in-out infinite alternate-reverse;}
+@keyframes chipFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.chip-v{font-weight:600;color:var(--blue);font-size:.82rem;margin-bottom:.15rem;}
+.chip-s{color:var(--muted);font-size:.64rem;}
+
+/* ═══════════════════════════════════════
+   SECTIONS SHARED
+═══════════════════════════════════════ */
+.sec{position:relative;z-index:2;padding:clamp(4.5rem,9vw,7rem) clamp(1.5rem,5vw,4rem);}
+.wrap{max-width:1200px;margin:0 auto;}
+.eyebrow{display:inline-flex;align-items:center;gap:.7rem;font-family:var(--mono);font-size:.7rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:.6rem;}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--blue);}
+.sec-h{font-family:var(--display);font-size:clamp(2rem,4.5vw,3.3rem);font-weight:700;letter-spacing:-.03em;line-height:1.1;margin-bottom:.75rem;}
+.sec-h em{font-style:italic;font-weight:300;color:var(--blue);}
+.sec-sub{font-size:.97rem;color:var(--muted);max-width:540px;margin-bottom:3.5rem;line-height:1.85;}
+.rule{width:44px;height:2px;background:linear-gradient(90deg,var(--blue),var(--indigo));border-radius:2px;margin:.5rem 0 2.2rem;}
+.glass{background:var(--card);border:1px solid var(--border2);border-radius:var(--r);backdrop-filter:blur(12px);}
+
+/* ═══════════════════════════════════════
+   ABOUT
+═══════════════════════════════════════ */
+.about-sec{background:var(--deep);}
+.about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(2.5rem,6vw,5.5rem);align-items:start;}
+.about-text p{color:var(--body);font-size:.97rem;line-height:1.95;margin-bottom:1.2rem;}
+.about-text strong{color:var(--text);font-weight:600;}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:2rem;}
+.icard{padding:1rem 1.1rem;border-radius:12px;transition:border-color .25s,transform .25s;}
+.icard:hover{border-color:var(--border)!important;transform:translateY(-2px);}
+.ic-ico{font-size:1.3rem;margin-bottom:.35rem;}
+.ic-t{font-size:.82rem;font-weight:600;color:var(--text);margin-bottom:.1rem;}
+.ic-s{font-size:.72rem;color:var(--muted);}
+
+.side-stack{display:flex;flex-direction:column;gap:1.3rem;}
+.panel{padding:1.4rem 1.6rem;border-radius:var(--r);}
+.panel-label{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:1.1rem;}
+.rm-row{display:flex;gap:.85rem;align-items:flex-start;margin-bottom:.9rem;}
+.rm-row:last-child{margin-bottom:0;}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:.38rem;}
+.d-blue{background:var(--blue);}
+.d-gold{background:var(--gold);}
+.d-indigo{background:var(--indigo);}
+.rm-t{font-size:.84rem;font-weight:600;color:var(--text);margin-bottom:.1rem;}
+.rm-d{font-size:.73rem;color:var(--muted);}
+
+.lang-row{display:flex;align-items:center;gap:.9rem;margin-bottom:.85rem;}
+.lang-row:last-child{margin-bottom:0;}
+.lang-n{font-size:.82rem;font-weight:500;min-width:84px;color:var(--text);}
+.bar-bg{flex:1;height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--indigo));border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform 1.1s cubic-bezier(.4,0,.2,1);}
+.bar-fill.go{transform:scaleX(1);}
+.lang-lv{font-family:var(--mono);font-size:.65rem;color:var(--muted);min-width:82px;text-align:right;}
+
+/* ═══════════════════════════════════════
+   DOMAINS
+═══════════════════════════════════════ */
+.domains-sec{background:var(--void);}
+.dom-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;}
+.dom-card{padding:1.7rem;border-radius:var(--r);transition:border-color .3s,transform .3s,box-shadow .3s;position:relative;overflow:hidden;}
+.dom-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--indigo));transform:scaleX(0);transform-origin:left;transition:transform .35s;}
+.dom-card:hover{border-color:var(--border)!important;transform:translateY(-5px);box-shadow:0 22px 60px rgba(0,0,0,.55);}
+.dom-card:hover::before{transform:scaleX(1);}
+.dom-ico{font-size:2rem;margin-bottom:.9rem;}
+.dom-n{font-family:var(--display);font-size:1.25rem;font-weight:700;margin-bottom:.45rem;}
+.dom-d{font-size:.82rem;color:var(--muted);line-height:1.75;margin-bottom:1.1rem;}
+.tags{display:flex;flex-wrap:wrap;gap:.35rem;}
+.tag{font-family:var(--mono);font-size:.63rem;font-weight:500;padding:.2rem .58rem;border-radius:4px;border:1px solid;}
+.tb{background:rgba(77,168,255,.07);color:var(--blue);border-color:rgba(77,168,255,.2);}
+.tg{background:rgba(212,168,83,.07);color:var(--gold);border-color:rgba(212,168,83,.2);}
+.tv{background:rgba(129,140,248,.07);color:var(--indigo);border-color:rgba(129,140,248,.2);}
+
+/* ═══════════════════════════════════════
+   PROJECTS
+═══════════════════════════════════════ */
+.projects-sec{background:var(--deep);}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;}
+.proj-card{padding:1.6rem;border-radius:var(--r);display:flex;flex-direction:column;transition:border-color .3s,transform .3s,box-shadow .3s;position:relative;}
+.proj-card::after{content:'';position:absolute;inset:0;border-radius:var(--r);background:radial-gradient(ellipse at top left,rgba(77,168,255,.04),transparent 70%);pointer-events:none;}
+.proj-card:hover{border-color:var(--border)!important;transform:translateY(-5px);box-shadow:0 22px 60px rgba(0,0,0,.5);}
+.proj-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.9rem;}
+.proj-ico{width:44px;height:44px;border-radius:11px;background:rgba(77,168,255,.08);border:1px solid rgba(77,168,255,.14);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.pbadges{display:flex;flex-direction:column;align-items:flex-end;gap:.25rem;}
+.pb{font-family:var(--mono);font-size:.6rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:.14rem .5rem;border-radius:4px;border:1px solid;}
+.pb-ai{background:rgba(77,168,255,.09);color:var(--blue);border-color:rgba(77,168,255,.2);}
+.pb-int{background:rgba(129,140,248,.09);color:var(--indigo);border-color:rgba(129,140,248,.2);}
+.pb-ft{background:rgba(212,168,83,.09);color:var(--gold);border-color:rgba(212,168,83,.2);}
+.proj-dt{font-family:var(--mono);font-size:.64rem;color:var(--dim);margin-bottom:.35rem;}
+.proj-t{font-family:var(--display);font-size:1.15rem;font-weight:700;margin-bottom:.45rem;line-height:1.3;}
+.proj-d{font-size:.82rem;color:var(--muted);line-height:1.75;flex:1;margin-bottom:1.1rem;}
+.proj-stack{display:flex;flex-wrap:wrap;gap:.3rem;}
+.stag{font-family:var(--mono);font-size:.63rem;font-weight:500;padding:.2rem .55rem;border-radius:4px;background:rgba(255,255,255,.04);color:rgba(232,240,255,.5);border:1px solid rgba(255,255,255,.08);}
+.proj-link{margin-top:1rem;display:inline-flex;align-items:center;gap:.35rem;font-family:var(--mono);font-size:.72rem;font-weight:500;color:var(--blue);text-decoration:none;transition:gap .2s,color .2s;}
+.proj-link:hover{gap:.6rem;color:var(--sky);}
+
+/* ═══════════════════════════════════════
+   SKILLS
+═══════════════════════════════════════ */
+.skills-sec{background:var(--void);}
+.skill-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+.skill-block{padding:1.3rem;border-radius:var(--r);}
+.sk-title{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--blue);margin-bottom:.9rem;padding-bottom:.65rem;border-bottom:1px solid rgba(77,168,255,.12);}
+.pills{display:flex;flex-wrap:wrap;gap:.35rem;}
+.pill{font-family:var(--mono);font-size:.67rem;font-weight:400;padding:.24rem .62rem;border-radius:4px;background:rgba(255,255,255,.04);color:rgba(232,240,255,.6);border:1px solid rgba(255,255,255,.08);transition:.18s;cursor:default;}
+.pill:hover{background:rgba(77,168,255,.09);color:var(--blue);border-color:rgba(77,168,255,.2);}
+.sk-note{font-size:.73rem;color:var(--muted);line-height:1.75;margin-bottom:.8rem;}
+
+/* ═══════════════════════════════════════
+   EXPERIENCE
+═══════════════════════════════════════ */
+.exp-sec{background:var(--deep);}
+.tl{position:relative;padding-left:2rem;}
+.tl::before{content:'';position:absolute;left:0;top:8px;bottom:0;width:1px;background:linear-gradient(180deg,var(--blue),transparent);}
+.tl-item{position:relative;margin-bottom:3rem;}
+.tl-item:last-child{margin-bottom:0;}
+.tl-item::before{content:'';position:absolute;left:-2rem;top:8px;width:9px;height:9px;border-radius:50%;background:var(--deep);border:2px solid var(--blue);transition:background .3s;}
+.tl-item:hover::before{background:var(--blue);}
+.tl-role{font-family:var(--display);font-size:1.22rem;font-weight:700;color:var(--text);margin-bottom:.18rem;}
+.tl-co{font-family:var(--mono);font-size:.8rem;font-weight:500;color:var(--blue);margin-bottom:.12rem;}
+.tl-dt{font-family:var(--mono);font-size:.68rem;color:var(--dim);margin-bottom:.75rem;}
+.tl-buls{display:flex;flex-direction:column;gap:.4rem;}
+.tl-b{font-size:.86rem;color:var(--muted);line-height:1.8;padding-left:.95rem;position:relative;}
+.tl-b::before{content:'›';position:absolute;left:0;color:var(--blue);font-weight:700;font-size:1rem;line-height:1.6;}
+
+/* ═══════════════════════════════════════
+   CERTIFICATIONS
+═══════════════════════════════════════ */
+.certs-sec{background:var(--void);}
+.cert-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;}
+.cert-card{padding:1.4rem;border-radius:var(--r);display:flex;gap:1rem;align-items:flex-start;transition:border-color .25s,transform .25s;}
+.cert-card:hover{border-color:var(--border)!important;transform:translateX(4px);}
+.cert-ico{width:46px;height:46px;flex-shrink:0;border-radius:11px;background:rgba(77,168,255,.08);border:1px solid rgba(77,168,255,.14);display:flex;align-items:center;justify-content:center;font-size:1.3rem;}
+.cert-n{font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.2rem;}
+.cert-o{font-family:var(--mono);font-size:.72rem;color:var(--blue);margin-bottom:.15rem;}
+.cert-d{font-family:var(--mono);font-size:.66rem;color:var(--dim);}
+
+/* ═══════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════ */
+.contact-sec{background:var(--deep);}
+.contact-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(2.5rem,6vw,5.5rem);align-items:start;}
+.c-links{display:flex;flex-direction:column;gap:.75rem;margin-top:2rem;}
+.c-link{display:flex;align-items:center;gap:.85rem;padding:.85rem 1.1rem;border-radius:12px;font-size:.87rem;font-weight:500;color:var(--text);transition:border-color .2s,color .2s,transform .2s;}
+.c-link:hover{border-color:var(--border)!important;color:var(--blue);transform:translateX(5px);}
+.cform{display:flex;flex-direction:column;gap:.85rem;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;}
+.fg{display:flex;flex-direction:column;gap:.3rem;}
+.fg label{font-family:var(--mono);font-size:.63rem;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);}
+.fg input,.fg textarea,.fg select{background:rgba(4,16,31,.8);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.82rem 1rem;color:var(--text);font-family:var(--sans);font-size:.87rem;outline:none;resize:vertical;transition:border-color .2s,box-shadow .2s;backdrop-filter:blur(8px);}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--dim);}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(77,168,255,.08);}
+.fg textarea{min-height:115px;}
+.fg select option{background:var(--navy);}
+.fb{font-family:var(--mono);font-size:.78rem;padding:.7rem 1rem;border-radius:8px;display:none;}
+.fb-ok{background:rgba(77,168,255,.07);color:var(--blue);border:1px solid rgba(77,168,255,.2);}
+.fb-err{background:rgba(239,68,68,.07);color:#f87171;border:1px solid rgba(239,68,68,.2);}
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+footer{text-align:center;padding:2.5rem clamp(1.5rem,5vw,4rem);border-top:1px solid var(--border2);position:relative;z-index:2;}
+.foot{font-family:var(--mono);font-size:.72rem;color:var(--dim);}
+.foot span{color:var(--blue);}
+
+/* ═══════════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════════ */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.in{opacity:1;transform:none;}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media(max-width:1024px){
+  .dom-grid,.proj-grid{grid-template-columns:repeat(2,1fr);}
+  .skill-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr;}
+  .hero-photo{display:none;}
+  .about-grid,.contact-grid{grid-template-columns:1fr;gap:2.5rem;}
+  .cert-grid{grid-template-columns:1fr;}
+}
+@media(max-width:768px){
+  .nav-links{gap:1.2rem;}
+  .nav-links a{font-size:.68rem;}
+  .nav-cv{display:none;}
+}
+@media(max-width:580px){
+  .dom-grid,.proj-grid,.skill-grid{grid-template-columns:1fr;}
+  .info-grid{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .hero-kpis{gap:1.2rem;}
+  .hero-btns{flex-direction:column;align-items:flex-start;}
+  .btn-primary,.btn-outline,.btn-cv{width:100%;justify-content:center;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<!-- ══ NAV ══ -->
+<nav id="nav">
+  <a href="#" class="nav-logo">MD.</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#domains">Expertise</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="./Manar_Degachi_CV_2026.pdf" download class="nav-cv">↓ Resume</a>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="orb o3"></div>
+
+  <div class="hero-grid">
+    <div>
+      <div class="h-badge"><span class="bdot"></span>Open to opportunities</div>
+
+      <h1 class="hero-name">
+        Manar<br>
+        <span class="cursive">Degachi</span>
+      </h1>
+
+      <div class="typed-row">
+        <span class="typed-prefix">~/</span>
+        <span id="typed"></span>
+        <span class="typed-cur">|</span>
+      </div>
+
+      <p class="hero-desc">
+        I build <strong>complete web applications</strong> — front to back. Angular on the UI, Python and PHP on the server, Firebase, PostgreSQL and MongoDB for data. A <strong>final-year IT student</strong> who already ships AI into production. Multilingual, ambitious, and open to the world.
+      </p>
+
+      <div class="hero-btns">
+        <a href="#projects" class="btn-primary">View My Work ↓</a>
+        <a href="#contact" class="btn-outline">✉ Get In Touch</a>
+        <a href="./Manar_Degachi_CV_2026.pdf" download class="btn-cv">↓ Download CV</a>
+      </div>
+
+      <div class="hero-kpis">
+        <div><div class="kpi-v">9+</div><div class="kpi-l">Projects</div></div>
+        <div><div class="kpi-v">6</div><div class="kpi-l">Languages</div></div>
+        <div><div class="kpi-v">19+</div><div class="kpi-l">Certs</div></div>
+        <div><div class="kpi-v">2027</div><div class="kpi-l">Graduation</div></div>
+      </div>
+    </div>
+
+    <div class="hero-photo">
+      <div class="photo-stack">
+        <div class="photo-ring"></div>
+        <div class="photo-img">
+          <img id="hero-img" src="" alt="Manar Degachi">
+        </div>
+        <div class="photo-echo"></div>
+        <div class="chip chip-1">
+          <div class="chip-v">Full-Stack Developer</div>
+          <div class="chip-s">Front-End: Angular · TypeScript · CSS</div>
+          <div class="chip-s">Back-End: Python · Spring Boot · Laravel · Symfony · REST APIs</div>
+        </div>
+        <div class="chip chip-2">
+          <div class="chip-v">⚡ Open to Work</div>
+          <div class="chip-s">Junior · Internship · Part-Time</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ ABOUT ══ -->
+<section id="about" class="sec about-sec">
+  <div class="wrap">
+    <div class="eyebrow">About Me</div>
+    <div class="rule"></div>
+    <div class="about-grid">
+      <div class="reveal">
+        <h2 class="sec-h">Building the web,<br><em>shaping what's next</em></h2>
+        <div class="about-text">
+          <p>I'm Manar Degachi — a <strong>final-year IT student at ISET Tozeur</strong>, Tunisia, specializing in web development. I build full-stack web applications front to back, and I already integrate AI into everything I ship.</p>
+          <p>I'm not just a developer. I've coached fitness, taught languages to students worldwide, led development teams, managed social media for international associations, and translated between cultures. I bring <strong>discipline, creativity, and deep ambition</strong> alongside clean code.</p>
+          <p>My roadmap is clear and intentional: <strong>master full-stack web dev now</strong>, add mobile development next year, and grow into AI engineering. I'm serious about my craft — and hungry to prove it.</p>
+        </div>
+        <div class="info-grid">
+          <div class="icard glass"><div class="ic-ico">🎓</div><div class="ic-t">Final-Year IT Student</div><div class="ic-s">ISET Tozeur · Web Development · 2024–2027</div></div>
+          <div class="icard glass"><div class="ic-ico">📍</div><div class="ic-t">Tozeur, Tunisia</div><div class="ic-s">Open to remote &amp; relocation</div></div>
+          <div class="icard glass"><div class="ic-ico">🔬</div><div class="ic-t">High School Diploma — Science, 2024</div><div class="ic-s">Abu Al Kacem Chebbi High School</div></div>
+          <div class="icard glass"><div class="ic-ico">🌍</div><div class="ic-t">6 Languages</div><div class="ic-s">AR · FR · EN · ES · IT · PT</div></div>
+        </div>
+      </div>
+
+      <div class="side-stack reveal">
+        <div class="panel glass">
+          <div class="panel-label">// career_roadmap</div>
+          <div class="rm-row"><div class="dot d-blue"></div><div><div class="rm-t">Now — Final-Year Full-Stack Web Development</div><div class="rm-d">Angular · Java · Python · PHP · Symfony · Spring Boot · Firebase · MongoDB · Laravel</div></div></div>
+          <div class="rm-row"><div class="dot d-gold"></div><div><div class="rm-t">2026–2027 — Graduation Project (PFE) &amp; Mobile Development</div><div class="rm-d">Final-year capstone project, plus cross-platform apps added to my stack</div></div></div>
+          <div class="rm-row"><div class="dot d-indigo"></div><div><div class="rm-t">2027+ — AI Engineering</div><div class="rm-d">ML systems · intelligent products · deep tech</div></div></div>
+        </div>
+        <div class="panel glass" id="lang-panel">
+          <div class="panel-label">// language_proficiency</div>
+          <div class="lang-row"><span class="lang-n">Arabic</span><div class="bar-bg"><div class="bar-fill" data-w="1"></div></div><span class="lang-lv">Native</span></div>
+          <div class="lang-row"><span class="lang-n">French</span><div class="bar-bg"><div class="bar-fill" data-w=".95"></div></div><span class="lang-lv">Fluent</span></div>
+          <div class="lang-row"><span class="lang-n">English</span><div class="bar-bg"><div class="bar-fill" data-w=".9"></div></div><span class="lang-lv">Fluent</span></div>
+          <div class="lang-row"><span class="lang-n">Spanish</span><div class="bar-bg"><div class="bar-fill" data-w=".72"></div></div><span class="lang-lv">Advanced</span></div>
+          <div class="lang-row"><span class="lang-n">Italian</span><div class="bar-bg"><div class="bar-fill" data-w=".32"></div></div><span class="lang-lv">Beginner</span></div>
+          <div class="lang-row"><span class="lang-n">Portuguese</span><div class="bar-bg"><div class="bar-fill" data-w=".2"></div></div><span class="lang-lv">Beginner</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ DOMAINS ══ -->
+<section id="domains" class="sec domains-sec">
+  <div class="wrap">
+    <div class="eyebrow">Expertise</div>
+    <div class="rule"></div>
+    <h2 class="sec-h reveal">My <em>Domains</em></h2>
+    <p class="sec-sub reveal">A developer with real depth across code, AI, cloud, testing, and leadership.</p>
+    <div class="dom-grid">
+      <div class="dom-card glass reveal"><div class="dom-ico">🖥️</div><div class="dom-n">Frontend Development</div><div class="dom-d">Responsive, accessible UIs with modern frameworks. Clean component architecture and polished UX from concept to deployment.</div><div class="tags"><span class="tag tb">Angular</span><span class="tag tb">TypeScript</span><span class="tag tb">HTML5</span><span class="tag tb">CSS3</span><span class="tag tb">Bootstrap</span><span class="tag tb">Tailwind</span></div></div>
+      <div class="dom-card glass reveal"><div class="dom-ico">⚙️</div><div class="dom-n">Backend Development</div><div class="dom-d">REST APIs, authentication, and database integration. Spring Boot, Symfony, Laravel, Python FastAPI, and Node.js with Redis caching and microservices.</div><div class="tags"><span class="tag tb">Spring Boot</span><span class="tag tb">Java</span><span class="tag tb">Symfony</span><span class="tag tb">Python</span><span class="tag tb">FastAPI</span><span class="tag tb">PHP</span><span class="tag tb">Laravel 12</span><span class="tag tb">Node.js</span><span class="tag tb">Redis</span></div></div>
+      <div class="dom-card glass reveal"><div class="dom-ico">🤖</div><div class="dom-n">AI &amp; LLM Integration</div><div class="dom-d">Integrating Generative AI and LLMs into real, deployed applications. AI assistants, prompt engineering, Make.com automation, and local model inference with Ollama.</div><div class="tags"><span class="tag tg">Gen AI</span><span class="tag tg">Prompt Eng.</span><span class="tag tg">LLM APIs</span><span class="tag tg">Ollama</span><span class="tag tg">Make.com</span></div></div>
+      <div class="dom-card glass reveal"><div class="dom-ico">🗄️</div><div class="dom-n">Database Engineering</div><div class="dom-d">Relational and document data across coursework and shipped apps — design, CRUD, query tuning, and backend integration. Docker-based deployments.</div><div class="tags"><span class="tag tb">PostgreSQL</span><span class="tag tb">MongoDB</span><span class="tag tb">Oracle</span><span class="tag tb">IBM DB2</span><span class="tag tb">Firebase</span><span class="tag tb">MySQL</span><span class="tag tb">SQLite</span><span class="tag tb">Docker</span></div></div>
+      <div class="dom-card glass reveal"><div class="dom-ico">🧪</div><div class="dom-n">Software Testing</div><div class="dom-d">Manual and automated testing pipelines: unit, integration, functional, regression. Test case design with oracle methodology, structured bug reports, and QA tooling.</div><div class="tags"><span class="tag tv">Selenium IDE</span><span class="tag tv">Postman</span><span class="tag tv">JMeter</span><span class="tag tv">Jira</span><span class="tag tv">TestRail</span><span class="tag tv">JUnit</span><span class="tag tv">Mockito</span></div></div>
+      <div class="dom-card glass reveal"><div class="dom-ico">☁️</div><div class="dom-n">Cloud &amp; DevOps</div><div class="dom-d">AWS fundamentals, containerized deployments with Docker, CI/CD awareness, and Agile/Scrum project management with Jira across full project cycles.</div><div class="tags"><span class="tag tg">AWS</span><span class="tag tg">Docker</span><span class="tag tg">Git/GitHub</span><span class="tag tg">Agile/Scrum</span><span class="tag tg">Jira</span></div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ PROJECTS ══ -->
+<section id="projects" class="sec projects-sec">
+  <div class="wrap">
+    <div class="eyebrow">Portfolio</div>
+    <div class="rule"></div>
+    <h2 class="sec-h reveal">Projects <em>I've Built</em></h2>
+    <p class="sec-sub reveal">Most recent first — from this month all the way back to my very first production project.</p>
+    <div class="proj-grid">
+
+      <div class="proj-card glass reveal">
+        <div class="proj-top"><div class="proj-ico">🛒</div><div class="pbadges"><span class="pb pb-ft">Featured</span></div></div>
+        <div class="proj-dt">// 2026</div>
+        <h3 class="proj-t">E-commerce Website</h3>
+        <p class="proj-d">Full-stack e-commerce website with an Angular front end and a Spring Boot back end, PostgreSQL for data and Redis for caching. Product catalog, auth, and cart flows; Agile Scrum with Jira; unit, integration, and E2E testing with Cypress, Postman, JUnit, and Mockito.</p>
+        <div class="proj-stack"><span class="stag">Angular</span><span class="stag">Spring Boot</span><span class="stag">PostgreSQL</span><span class="stag">Redis</span><span class="stag">Cypress</span><span class="stag">Postman</span><span class="stag">JUnit</span><span class="stag">Mockito</span></div>
+        <a href="https://gitlab.com/manar-code09/projet-integration" class="proj-link" target="_blank" rel="noopener">GitLab →</a>
+      </div>
+
+      <div class="proj-card glass reveal">
+        <div class="proj-top"><div class="proj-ico">🌤️</div><div class="pbadges"><span class="pb pb-ft">Featured</span></div></div>
+        <div class="proj-dt">// 2026</div>
+        <h3 class="proj-t">WeatherApp — Symfony</h3>
+        <p class="proj-d">Full-stack weather application built with Symfony PHP framework. Consumes external weather APIs to display real-time forecasts. PostgreSQL database for user preferences and history, fully containerized with Docker for consistent deployments.</p>
+        <div class="proj-stack"><span class="stag">Symfony</span><span class="stag">PHP</span><span class="stag">PostgreSQL</span><span class="stag">Docker</span><span class="stag">REST API</span></div>
+        <a href="https://github.com/manar09-code" class="proj-link" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+
+      <div class="proj-card glass reveal">
+        <div class="proj-top"><div class="proj-ico">🏬</div><div class="pbadges"><span class="pb pb-ft">Featured</span></div></div>
+        <div class="proj-dt">// 2026</div>
+        <h3 class="proj-t">Site Vitrine — Angular &amp; Spring Boot</h3>
+        <p class="proj-d">Professional showcase website built with Angular SPA front end, Spring Boot REST API back end with Redis caching for performance. Clean MVC architecture, responsive design, and full CRUD admin panel.</p>
+        <div class="proj-stack"><span class="stag">Angular</span><span class="stag">Spring Boot</span><span class="stag">Redis</span><span class="stag">PostgreSQL</span><span class="stag">REST API</span></div>
+        <a href="https://github.com/manar09-code" class="proj-link" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+
+      <div class="proj-card glass reveal">
+        <div class="proj-top"><div class="proj-ico">🏢</div><div class="pbadges"></div></div>
+        <div class="proj-dt">// March 2026</div>
+        <h3 class="proj-t">Building Reservation System</h3>
+        <p class="proj-d">Laravel 12 reservation platform for booking buildings. Breeze auth, Livewire dynamic admin panel, Tailwind CSS, and SQLite database — full PHP MVC architecture.</p>
+        <div class="proj-stack"><span class="stag">Laravel 12</span><span class="stag">PHP</span><span class="stag">Livewire</span><span class="stag">Tailwind</span><span class="stag">SQLite</span></div>
+        <a href="https://github.com/manar09-code/laravel-immobilier.git" class="proj-link" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+
+      <div class="proj-card glass reveal">
+        <div class="proj-top"><div class="proj-ico">📱</div><div class="pbadges"></div></div>
+        <div class="proj-dt">// March 2026</div>
+        <h3 class="proj-t">Phone Accessories Manager</h3>
+        <p class="proj-d">Full-stack management system for phone accessories. Angular SPA front-end connected to a high-performance FastAPI Python back-end with a clean REST API.</p>
+        <div class="proj-stack"><span class="stag">Angular</span><span class="stag">FastAPI</span><span class="stag">Python</span><span class="stag">REST API</span></div>
+        <a href="https://github.com/manar09-code/accessories-project.git" class="proj-link" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+
+      <div class="proj-card glass reveal">
+        <div class="proj-top"><div class="proj-ico">🌐</div><div class="pbadges"><span class="pb pb-int">Internship</span><span class="pb pb-ai">🤖 AI</span></div></div>
+        <div class="proj-dt">// January 2026 — Frequence Santec</div>
+        <h3 class="proj-t">Innera — Community Platform</h3>
+        <p class="proj-d">Private community web app: posts, comments, profiles, admin panel. Angular + Firebase, Make.com workflow automation, and an integrated AI assistant throughout.</p>
+        <div class="proj-stack"><span class="stag">Angular</span><span class="stag">Firebase</span><span class="stag">Make.com</span><span class="stag">AI</span></div>
+        <a href="https://github.com/manar09-code/innera-platform.git" class="proj-link" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+
+      <div class="proj-card glass reveal">
+        <div class="proj-top"><div class="proj-ico">🏟️</div><div class="pbadges"><span class="pb pb-ai">🤖 AI Assistant</span><span class="pb pb-ft">Featured</span></div></div>
+        <div class="proj-dt">// December 2025</div>
+        <h3 class="proj-t">Sports Booking System</h3>
+        <p class="proj-d">Full Python platform for booking football and basketball fields. Online payments, club news feeds, stats dashboard, and an AI assistant for smart field recommendations.</p>
+        <div class="proj-stack"><span class="stag">Python</span><span class="stag">MongoDB</span><span class="stag">REST API</span><span class="stag">AI</span></div>
+        <a href="https://github.com/manar09-code/Python-Project.git" class="proj-link" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+
+      <div class="proj-card glass reveal">
+        <div class="proj-top"><div class="proj-ico">⚽</div><div class="pbadges"><span class="pb pb-ai">🤖 AI-Powered</span><span class="pb pb-ft">Featured</span></div></div>
+        <div class="proj-dt">// December 2025</div>
+        <h3 class="proj-t">AI Football Language Coach</h3>
+        <p class="proj-d">Angular web app for learning languages through AI-powered football-themed exercises. Firebase real-time backend for personalized sessions, built with Angular CLI.</p>
+        <div class="proj-stack"><span class="stag">Angular</span><span class="stag">TypeScript</span><span class="stag">Firebase</span><span class="stag">AI/LLM</span></div>
+        <a href="https://github.com/manar09-code/Angular-Project.git" class="proj-link" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+
+      <div class="proj-card glass reveal">
+        <div class="proj-top"><div class="proj-ico">🚨</div><div class="pbadges"><span class="pb pb-int">1st Internship</span></div></div>
+        <div class="proj-dt">// January 2025 — Addinn</div>
+        <h3 class="proj-t">PLS Rescue Organization Website</h3>
+        <p class="proj-d">Dynamic multi-page front-end website for PLS Rescue — my very first production project, built during my first-year internship. HTML, CSS, and JavaScript, fully delivered.</p>
+        <div class="proj-stack"><span class="stag">HTML5</span><span class="stag">CSS3</span><span class="stag">JavaScript</span></div>
+        <a href="https://github.com/manar09-code/PLS-Project.git" class="proj-link" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ SKILLS ══ -->
+<section id="skills" class="sec skills-sec">
+  <div class="wrap">
+    <div class="eyebrow">Tech Stack</div>
+    <div class="rule"></div>
+    <h2 class="sec-h reveal">Skills &amp; <em>Technologies</em></h2>
+    <p class="sec-sub reveal">Everything in my toolkit — front to back, database to deployment, AI to testing.</p>
+    <div class="skill-grid">
+
+      <div class="skill-block glass reveal">
+        <div class="sk-title">// frontend</div>
+        <div class="pills"><span class="pill">Angular</span><span class="pill">TypeScript</span><span class="pill">JavaScript</span><span class="pill">HTML5</span><span class="pill">CSS3</span><span class="pill">Bootstrap</span><span class="pill">Tailwind CSS</span><span class="pill">Livewire</span></div>
+      </div>
+
+      <div class="skill-block glass reveal">
+        <div class="sk-title">// backend</div>
+        <div class="sk-note">Spring Boot labs: MVC, REST APIs, JPA, Redis, Eureka, OpenFeign, API Gateway. Symfony &amp; Laravel for PHP MVC. FastAPI &amp; Node.js for lightweight services.</div>
+        <div class="pills"><span class="pill">Java</span><span class="pill">Python</span><span class="pill">FastAPI</span><span class="pill">Spring Boot</span><span class="pill">Symfony</span><span class="pill">PHP</span><span class="pill">Laravel 12</span><span class="pill">Node.js</span><span class="pill">REST APIs</span><span class="pill">Redis</span><span class="pill">Thymeleaf</span><span class="pill">Breeze Auth</span></div>
+      </div>
+
+      <div class="skill-block glass reveal">
+        <div class="sk-title">// ai &amp; llms</div>
+        <div class="sk-note">Hands-on with generative AI APIs, local inference, and workflow automation. LangChain basics, Ollama for running local models, prompt engineering, and API integrations.</div>
+        <div class="pills"><span class="pill">Generative AI</span><span class="pill">Prompt Eng.</span><span class="pill">LLM APIs</span><span class="pill">Ollama</span><span class="pill">LangChain</span><span class="pill">Make.com</span><span class="pill">OpenAI API</span></div>
+      </div>
+
+      <div class="skill-block glass reveal">
+        <div class="sk-title">// databases</div>
+        <div class="sk-note">Schema design, CRUD, basic query optimization, and wiring data layers into backend apps across both relational and NoSQL systems.</div>
+        <div class="pills"><span class="pill">PostgreSQL</span><span class="pill">MongoDB</span><span class="pill">Oracle</span><span class="pill">IBM DB2</span><span class="pill">Firebase</span><span class="pill">MySQL</span><span class="pill">SQLite</span></div>
+      </div>
+
+      <div class="skill-block glass reveal">
+        <div class="sk-title">// software testing</div>
+        <div class="sk-note">Methodologies: unit, integration, functional (black/white box), regression. Test cases with oracle design, structured bug reports, manual &amp; automated test suites.</div>
+        <div class="pills"><span class="pill">Selenium IDE</span><span class="pill">Postman</span><span class="pill">JMeter</span><span class="pill">Jira</span><span class="pill">TestRail</span><span class="pill">JUnit</span><span class="pill">Cypress</span><span class="pill">Mockito</span></div>
+      </div>
+
+      <div class="skill-block glass reveal">
+        <div class="sk-title">// cloud, devops &amp; tools</div>
+        <div class="pills"><span class="pill">AWS</span><span class="pill">Docker</span><span class="pill">Git</span><span class="pill">GitHub</span><span class="pill">GitLab</span><span class="pill">Scrum</span><span class="pill">Jira</span><span class="pill">Agile</span><span class="pill">Web Scraping</span><span class="pill">Lightroom</span><span class="pill">Canva</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ EXPERIENCE ══ -->
+<section id="experience" class="sec exp-sec">
+  <div class="wrap">
+    <div class="eyebrow">Experience</div>
+    <div class="rule"></div>
+    <h2 class="sec-h reveal">Work <em>History</em></h2>
+    <p class="sec-sub reveal">From development internships to coaching, teaching, and international community leadership.</p>
+    <div class="tl">
+
+      <div class="tl-item reveal">
+        <div class="tl-role">Software Engineering — Academic Labs</div>
+        <div class="tl-co">ISET Tozeur · Coursework &amp; practical modules</div>
+        <div class="tl-dt">2024 – Present</div>
+        <div class="tl-buls">
+          <div class="tl-b">Spring Boot modules: configuration, MVC, REST APIs, Spring Data JPA, Redis caching, microservices (Eureka, OpenFeign, API Gateway), container basics, unit and integration tests.</div>
+          <div class="tl-b">Symfony PHP framework: MVC architecture, Doctrine ORM, routing, form management, Docker containerization with PostgreSQL databases.</div>
+          <div class="tl-b">Software testing labs: methodologies (unit through regression), test cases with oracle design, manual testing, structured bug reports; tools including Selenium IDE, Postman, JMeter, Jira, and TestRail.</div>
+          <div class="tl-b">Advanced Python and data: PostgreSQL-backed APIs, AI workflow labs, LangChain basics, Ollama local inference, web scraping; relational and NoSQL work with PostgreSQL, MongoDB, Oracle, and IBM DB2.</div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-role">Full-Stack Intern Web Developer</div>
+        <div class="tl-co">Frequence Santec Tunisia</div>
+        <div class="tl-dt">January 2026 – February 2026 · Year 2 Internship</div>
+        <div class="tl-buls">
+          <div class="tl-b">Built the Innera platform — a full-stack Angular + Firebase private community web app — as the primary developer during second-year IT internship.</div>
+          <div class="tl-b">Integrated Make.com workflow automation and an AI assistant for posts, profiles, comments, and admin management.</div>
+          <div class="tl-b">Owned front-end (Angular), back-end (Firebase), real-time features, and full application delivery end-to-end.</div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-role">Front-End Intern Web Developer</div>
+        <div class="tl-co">Addinn Tunisia</div>
+        <div class="tl-dt">January 2025 – February 2025 · Year 1 Internship</div>
+        <div class="tl-buls">
+          <div class="tl-b">Built and delivered the PLS Rescue Organization website — dynamic, multi-page front-end in HTML, CSS, and JavaScript — my first production project.</div>
+          <div class="tl-b">Worked within a professional dev environment, contributing to team workflows and delivery milestones.</div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-role">Online Language Tutor</div>
+        <div class="tl-co">HelloTalk — Freelance</div>
+        <div class="tl-dt">2020 – 2023</div>
+        <div class="tl-buls">
+          <div class="tl-b">Delivered personalized lessons in English, Arabic, and French to learners worldwide via the HelloTalk platform.</div>
+          <div class="tl-b">Designed tailored exercises for speaking, writing, and comprehension; maintained a growing international student base.</div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-role">Fitness Coach</div>
+        <div class="tl-co">Local Gym — Tozeur, Tunisia</div>
+        <div class="tl-dt">2021 – 2023</div>
+        <div class="tl-buls">
+          <div class="tl-b">Coached gym members on fitness routines, workout programming, and physical conditioning.</div>
+          <div class="tl-b">Developed strong discipline, interpersonal, and motivational skills through daily hands-on coaching.</div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-role">Social Media Manager &amp; Content Creator</div>
+        <div class="tl-co">Youth For Planet United Association</div>
+        <div class="tl-dt">January 2021 – June 2023</div>
+        <div class="tl-buls">
+          <div class="tl-b">Managed Instagram and Facebook for environmental campaigns; coordinated with international partners and translated between Arabic, French, and English.</div>
+          <div class="tl-b">Produced photo and video content using Adobe Lightroom; maintained consistent brand voice and visual identity across platforms.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ CERTIFICATIONS ══ -->
+<section id="certifications" class="sec certs-sec">
+  <div class="wrap">
+    <div class="eyebrow">Credentials</div>
+    <div class="rule"></div>
+    <h2 class="sec-h reveal">Certifications <em>&amp; Awards</em></h2>
+    <p class="sec-sub reveal">Internationally recognized credentials, achievements, and community-earned expertise.</p>
+    <p class="sec-sub reveal" style="margin-top:-2.2rem;margin-bottom:2.5rem;">Tap any certificate to view proof.</p>
+    <div class="cert-grid" id="cert-grid">
+
+      <a class="cert-card glass reveal" target="_blank" rel="noopener">
+        <div class="cert-ico">☁️</div>
+        <div>
+          <div class="cert-n">AWS Cloud Practitioner</div>
+          <div class="cert-o">AWS Academy · Cloud Computing Foundations</div>
+          <div class="cert-d">2026</div>
+        </div>
+      </a>
+
+      <a class="cert-card glass reveal" target="_blank" rel="noopener">
+        <div class="cert-ico">💡</div>
+        <div>
+          <div class="cert-n">Design Thinking Certificate</div>
+          <div class="cert-o">Human-Centered Training · Problem Solving Methodology</div>
+          <div class="cert-d">2026</div>
+        </div>
+      </a>
+
+      <a class="cert-card glass reveal" target="_blank" rel="noopener">
+        <div class="cert-ico">🤝</div>
+        <div>
+          <div class="cert-n">Soft Skills Training</div>
+          <div class="cert-o">Elife Center Tozeur · Communication · Leadership · Collaboration</div>
+          <div class="cert-d">2026</div>
+        </div>
+      </a>
+
+      <a class="cert-card glass reveal" target="_blank" rel="noopener">
+        <div class="cert-ico">📋</div>
+        <div>
+          <div class="cert-n">Atlassian ITSM</div>
+          <div class="cert-o">LinkedIn Learning · IT Service Management</div>
+          <div class="cert-d">2026</div>
+        </div>
+      </a>
+
+      <a class="cert-card glass reveal" target="_blank" rel="noopener">
+        <div class="cert-ico">🛡️</div>
+        <div>
+          <div class="cert-n">Cybersecurity Essentials</div>
+          <div class="cert-o">Microsoft &amp; LinkedIn Learning</div>
+          <div class="cert-d">2026</div>
+        </div>
+      </a>
+
+      <a class="cert-card glass reveal" target="_blank" rel="noopener">
+        <div class="cert-ico">🔒</div>
+        <div>
+          <div class="cert-n">Security Essentials</div>
+          <div class="cert-o">Microsoft &amp; LinkedIn Learning</div>
+          <div class="cert-d">2026</div>
+        </div>
+      </a>
+
+      <a class="cert-card glass reveal" target="_blank" rel="noopener">
+        <div class="cert-ico">🐳</div>
+        <div>
+          <div class="cert-n">Docker Foundations</div>
+          <div class="cert-o">LinkedIn Learning</div>
+          <div class="cert-d">2026</div>
+        </div>
+      </a>
+
+      <a class="cert-card glass reveal" target="_blank" rel="noopener">
+        <div class="cert-ico">🎯</div>
+        <div>
+          <div class="cert-n">Job Hunter's Guide — Certificate of Completion</div>
+          <div class="cert-o">GoMyCode · Career readiness: CV, interviews, professional communication</div>
+          <div class="cert-d">2026</div>
+        </div>
+      </a>
+
+      <a class="cert-card glass reveal" target="_blank" rel="noopener">
+        <div class="cert-ico">💼</div>
+        <div>
+          <div class="cert-n">Freelancing Badge</div>
+          <div class="cert-o">Abdulla Al Ghurair Foundation · Independent Work &amp; Client Management</div>
+          <div class="cert-d">2026</div>
+        </div>
+      </a>
+
+      <a class="cert-card glass reveal" target="_blank" rel="noopener">
+        <div class="cert-ico">💰</div>
+        <div>
+          <div class="cert-n">Financial Readiness</div>
+          <div class="cert-o">AGF · Financial Literacy &amp; Project Funding</div>
+          <div class="cert-d">2026</div>
+        </div>
+      </a>
+
+      <a class="cert-card glass reveal" target="_blank" rel="noopener">
+        <div class="cert-ico">🤖</div>
+        <div>
+          <div class="cert-n">Intro to AI</div>
+          <div class="cert-o">Udacity</div>
+          <div class="cert-d">February 2026</div>
+        </div>
+      </a>
+
+      <a class="cert-card glass reveal" target="_blank" rel="noopener">
+        <div class="cert-ico">⚡</div>
+        <div>
+          <div class="cert-n">Gen AI Productivity</div>
+          <div class="cert-o">Microsoft &amp; LinkedIn Learning</div>
+          <div class="cert-d">2026</div>
+        </div>
+      </a>
+
+      <a class="cert-card glass reveal" target="_blank" rel="noopener">
+        <div class="cert-ico">📊</div>
+        <div>
+          <div class="cert-n">Gen AI for Marketing</div>
+          <div class="cert-o">Microsoft Copilot</div>
+          <div class="cert-d">2026</div>
+        </div>
+      </a>
+
+      <a class="cert-card glass reveal" target="_blank" rel="noopener">
+        <div class="cert-ico">❄️</div>
+        <div>
+          <div class="cert-n">Gen AI Professional</div>
+          <div class="cert-o">Snowflake</div>
+          <div class="cert-d">2026</div>
+        </div>
+      </a>
+
+      <a class="cert-card glass reveal" target="_blank" rel="noopener">
+        <div class="cert-ico">🧬</div>
+        <div>
+          <div class="cert-n">Generative AI for Professionals</div>
+          <div class="cert-o">GoMyCode · 8-Week Program</div>
+          <div class="cert-d">December 2025</div>
+        </div>
+      </a>
+
+      <a class="cert-card glass reveal" target="_blank" rel="noopener">
+        <div class="cert-ico">🏆</div>
+        <div>
+          <div class="cert-n">Scrum Master &amp; Product Owner</div>
+          <div class="cert-o">ISET Tozeur · Agile &amp; Scrum Methodology</div>
+          <div class="cert-d">October 2025</div>
+        </div>
+      </a>
+
+      <a class="cert-card glass reveal" target="_blank" rel="noopener">
+        <div class="cert-ico">🌱</div>
+        <div>
+          <div class="cert-n">Entrepreneurship Camp</div>
+          <div class="cert-o">INJAZ Tunisia · JA Worldwide Member</div>
+          <div class="cert-d">January 2025</div>
+        </div>
+      </a>
+
+      <a class="cert-card glass reveal" target="_blank" rel="noopener">
+        <div class="cert-ico">🔬</div>
+        <div>
+          <div class="cert-n">Innovation Camp — Participant</div>
+          <div class="cert-o">INJAZ Tunisia · JA Worldwide Member</div>
+          <div class="cert-d">October 2024</div>
+        </div>
+      </a>
+
+      <a class="cert-card glass reveal" target="_blank" rel="noopener">
+        <div class="cert-ico">🎬</div>
+        <div>
+          <div class="cert-n">Best Video Editor Award</div>
+          <div class="cert-o">Abu Al Kacem Chebbi High School — Student Festival</div>
+          <div class="cert-d">2021</div>
+        </div>
+      </a>
+
+      <a class="cert-card glass reveal" target="_blank" rel="noopener">
+        <div class="cert-ico">🌍</div>
+        <div>
+          <div class="cert-n">International Communication &amp; Community Leadership</div>
+          <div class="cert-o">Youth For Planet Association · Translation, project management &amp; cross-cultural coordination</div>
+          <div class="cert-d">2021 – 2023</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ CONTACT ══ -->
+<section id="contact" class="sec contact-sec">
+  <div class="wrap">
+    <div class="eyebrow">Let's Connect</div>
+    <div class="rule"></div>
+    <div class="contact-grid">
+      <div class="reveal">
+        <h2 class="sec-h">Ready to build<br><em>something great?</em></h2>
+        <p style="font-size:.97rem;color:var(--muted);line-height:1.85;max-width:360px;margin-bottom:2rem;">I'm actively looking for internships, junior developer roles, and freelance projects. If you have an opportunity or just want to connect — I'd love to hear from you.</p>
+        <div class="c-links">
+          <a href="mailto:manardg09@gmail.com" class="c-link glass">📧 &nbsp;manardg09@gmail.com</a>
+          <a href="tel:+21699785376" class="c-link glass">📱 &nbsp;+216 99 785 376</a>
+          <a href="https://linkedin.com/in/manar-degachi" class="c-link glass" target="_blank" rel="noopener">💼 &nbsp;linkedin.com/in/manar-degachi</a>
+          <a href="https://github.com/manar09-code" class="c-link glass" target="_blank" rel="noopener">🐙 &nbsp;github.com/manar09-code</a>
+          <a href="./Manar_Degachi_CV_2026.pdf" download class="c-link glass">📄 &nbsp;Download Resume / CV</a>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <form class="cform" id="cform" novalidate>
+          <div class="form-row">
+            <div class="fg"><label for="fn">Your Name</label><input type="text" id="fn" name="name" placeholder="Jane Smith" required></div>
+            <div class="fg"><label for="fe">Email</label><input type="email" id="fe" name="email" placeholder="jane@company.com" required></div>
+          </div>
+          <div class="fg">
+            <label for="fs">Topic</label>
+            <select id="fs" name="subject">
+              <option value="">Select a topic…</option>
+              <option>Job Opportunity / Internship</option>
+              <option>Freelance Project</option>
+              <option>Collaboration</option>
+              <option>General Enquiry</option>
+            </select>
+          </div>
+          <div class="fg"><label for="fm">Message</label><textarea id="fm" name="message" placeholder="Tell me about the opportunity…" required></textarea></div>
+          <button type="submit" class="btn-primary" style="border:none;cursor:pointer;width:fit-content">
+            <span id="btn-lbl">Send Message →</span>
+          </button>
+          <div class="fb fb-ok" id="fb-ok">✅ Message sent! I'll reply within 24 hours.</div>
+          <div class="fb fb-err" id="fb-err">❌ Please fill all fields or email me directly.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  <p class="foot">Designed &amp; built by <span>Manar Degachi</span> · 2026 · Tozeur, Tunisia &nbsp;·&nbsp; Full-Stack Web Developer · Final-Year IT Student · Future AI Engineer</p>
+</footer>
+
+
+<script>
+/* ── PHOTO ── */
+/* Paste your OneDrive DIRECT-download image link below (not the "share" link).
+   To convert a OneDrive share link to a direct-embed link:
+   1. Get the share link (Share → Copy link)
+   2. Replace "?e=..." at the end with "&download=1"
+   Or simplest: upload the photo to a free host like https://postimages.org
+   and paste the direct image URL (ends in .jpg/.png) below. */
+var PHOTO_URL = "https://via.placeholder.com/450x560/0a1c33/4da8ff?text=Add+Your+Photo";
+(function(){
+  var img = document.getElementById('hero-img');
+  if(img) img.src = PHOTO_URL;
+})();
+
+/* ── CERTIFICATE PROOF LINKS ── */
+/* Paste a OneDrive (or Google Drive) FOLDER share link below — one link that
+   holds all your certificate images/PDFs. Every certificate card will open it
+   in a new tab. If you'd rather link each certificate to its own individual
+   proof file, replace this with an object keyed by certificate name and match
+   it up in the loop below instead. */
+var CERT_PROOF_LINK = "https://1drv.ms/f/YOUR-ONEDRIVE-FOLDER-LINK-HERE";
+(function(){
+  document.querySelectorAll('#cert-grid .cert-card').forEach(function(el){
+    el.href = CERT_PROOF_LINK;
+  });
+})();
+
+/* ── EMAIL LINK ── */
+(function(){
+  var e = ['manardg09','gmail.com'].join('@');
+  document.querySelectorAll('[data-email]').forEach(function(el){ el.href = 'mailto:' + e; el.textContent = e; });
+})();
+
+/* ── STARS ── */
+(function(){
+  var c=document.getElementById('stars'),ctx=c.getContext('2d'),stars=[],W,H;
+  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;}
+  function init(){stars=[];var n=Math.floor(W*H/5500);for(var i=0;i<n;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*.9+.2,a:Math.random(),sp:Math.random()*.003+.001,ph:Math.random()*Math.PI*2});}
+  function draw(t){ctx.clearRect(0,0,W,H);stars.forEach(function(s){var a=s.a*(.35+.65*Math.sin(t*s.sp+s.ph));ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle='rgba(147,197,253,'+a+')';ctx.fill();});requestAnimationFrame(draw);}
+  resize();init();requestAnimationFrame(draw);
+  window.addEventListener('resize',function(){resize();init();},{passive:true});
+})();
+
+/* ── TYPING ── */
+window.addEventListener('DOMContentLoaded', function(){
+  var titles = ['Final-Year IT Student','Full-Stack Developer','AI Integrations Builder','Mobile Development — Next Year','Future AI Engineer'];
+  var el = document.getElementById('typed');
+  if(!el) return;
+  var tIdx=0, charIdx=0, isDeleting=false;
+  function tick(){
+    var current=titles[tIdx];
+    if(isDeleting){ charIdx--; el.textContent=current.substring(0,charIdx); if(charIdx===0){isDeleting=false;tIdx=(tIdx+1)%titles.length;setTimeout(tick,400);}else{setTimeout(tick,45);} }
+    else{ charIdx++; el.textContent=current.substring(0,charIdx); if(charIdx===current.length){isDeleting=true;setTimeout(tick,2200);}else{setTimeout(tick,80);} }
+  }
+  setTimeout(tick, 600);
+});
+
+/* ── NAV SCROLL ── */
+window.addEventListener('scroll', function(){
+  var nav=document.getElementById('nav');
+  if(nav) nav.style.padding = window.scrollY>60 ? '.85rem clamp(1.5rem,5vw,4rem)' : '1.4rem clamp(1.5rem,5vw,4rem)';
+},{passive:true});
+
+/* ── SCROLL REVEAL ── */
+(function(){
+  var ro=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var sibs=Array.from(e.target.parentNode.children).filter(function(c){return c.classList.contains('reveal');});
+      e.target.style.transitionDelay=(sibs.indexOf(e.target)%4)*0.1+'s';
+      e.target.classList.add('in');
+    });
+  },{threshold:.08});
+  document.querySelectorAll('.reveal').forEach(function(el){ro.observe(el);});
+})();
+
+/* ── LANGUAGE BARS ── */
+(function(){
+  var lo=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      e.target.querySelectorAll('.bar-fill').forEach(function(b){
+        b.style.transform='scaleX('+b.dataset.w+')';
+        b.classList.add('go');
+      });
+    });
+  },{threshold:.25});
+  var panel=document.getElementById('lang-panel');
+  if(panel) lo.observe(panel);
+})();
+
+/* ── CONTACT FORM ── */
+(function(){
+  var FSID='xwvrvayl';
+  var form=document.getElementById('cform');
+  if(!form) return;
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var ok=document.getElementById('fb-ok'),err=document.getElementById('fb-err'),lbl=document.getElementById('btn-lbl');
+    ok.style.display='none'; err.style.display='none';
+    if(!form.name.value.trim()||!form.email.value.trim()||!form.message.value.trim()){
+      err.textContent='Please fill in all required fields.'; err.style.display='block'; return;
+    }
+    lbl.textContent='Sending…';
+    fetch('https://formspree.io/f/'+FSID,{method:'POST',body:new FormData(form),headers:{Accept:'application/json'}})
+      .then(function(r){if(r.ok){ok.style.display='block';form.reset();}else throw new Error();})
+      .catch(function(){err.textContent='Failed. Email: manardg09@gmail.com'; err.style.display='block';})
+      .finally(function(){lbl.textContent='Send Message →';});
+  });
+})();
+</script>
+</body>
+</html>
