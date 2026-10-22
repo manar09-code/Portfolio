@@ -517,6 +517,7 @@ footer{text-align:center;padding:2.5rem clamp(1.5rem,5vw,4rem);border-top:1px so
         <h3 class="proj-t">LeakLens — Hidden Water-Leak Early Warning</h3>
         <p class="proj-d">Analyzes household water consumption and flags possible hidden leaks: confidence score, estimated daily waste and monthly cost, suspected fixture, and a plain explanation from a rule-based engine. Delivered as a web app, an Android app, and an authenticated REST API.</p>
         <div class="proj-stack"><span class="stag">Flutter</span><span class="stag">FastAPI</span><span class="stag">MongoDB</span><span class="stag">HTML/CSS/JS</span></div>
+        <a href="https://github.com/manar09-code/leaklens" class="proj-link" target="_blank" rel="noopener">GitHub →</a>
       </div>
 
       <div class="proj-card glass reveal">
@@ -810,6 +811,15 @@ footer{text-align:center;padding:2.5rem clamp(1.5rem,5vw,4rem);border-top:1px so
       </a>
 
       <a class="cert-card glass reveal" target="_blank" rel="noopener">
+        <div class="cert-ico">🏅</div>
+        <div>
+          <div class="cert-n">Professional Scrum Master (PSM)</div>
+          <div class="cert-o">Scrum.org · Agile &amp; Scrum Methodology</div>
+          <div class="cert-d">January 2025</div>
+        </div>
+      </a>
+
+      <a class="cert-card glass reveal" target="_blank" rel="noopener">
         <div class="cert-ico">🏆</div>
         <div>
           <div class="cert-n">Scrum Master &amp; Product Owner</div>
@@ -937,10 +947,28 @@ footer{text-align:center;padding:2.5rem clamp(1.5rem,5vw,4rem);border-top:1px so
       </a>
      
       <a class="cert-card glass reveal" target="_blank" rel="noopener">
+        <div class="cert-ico">🧑‍💻</div>
+        <div>
+          <div class="cert-n">GitHub Copilot Prompt Writing</div>
+          <div class="cert-o">Microsoft &amp; LinkedIn Learning</div>
+          <div class="cert-d">May 2026</div>
+        </div>
+      </a>
+
+      <a class="cert-card glass reveal" target="_blank" rel="noopener">
         <div class="cert-ico">🤝</div>
         <div>
           <div class="cert-n">Soft Skills Training</div>
           <div class="cert-o">Elife Center Tozeur &amp; IIDebate - International Institute of Debate · Communication · Leadership · Collaboration</div>
+          <div class="cert-d">June 2026</div>
+        </div>
+      </a>
+
+      <a class="cert-card glass reveal" target="_blank" rel="noopener">
+        <div class="cert-ico">🧠</div>
+        <div>
+          <div class="cert-n">AI for Personal Productivity, Job Search &amp; Entrepreneurship</div>
+          <div class="cert-o">Nomu Al Ghurair Elife Talent Boost · 1-Day Workshop</div>
           <div class="cert-d">June 2026</div>
         </div>
       </a>
@@ -1031,9 +1059,21 @@ var PHOTO_URL = "./pdp.jpg";
    proof file, replace this with an object keyed by certificate name and match
    it up in the loop below instead. */
 var CERT_PROOF_LINK = "https://1drv.ms/f/YOUR-ONEDRIVE-FOLDER-LINK-HERE";
+var CERT_PROOF_FILES = {
+  "Docker Foundations": "certificates/Docker_Foundations.pdf",
+  "Gen AI Productivity": "certificates/Gen_AI_Productivity.pdf",
+  "Gen AI Professional": "certificates/Gen_AI_Professional_Snowflake.pdf",
+  "Gen AI for Marketing": "certificates/Gen_AI_for_Marketing.pdf",
+  "Atlassian ITSM": "certificates/Atlassian_ITSM.pdf",
+  "Security Essentials": "certificates/Microsoft_Security_Essentials.pdf",
+  "Cybersecurity Essentials": "certificates/Career_Essentials_Cybersecurity.pdf",
+  "AI for Personal Productivity, Job Search & Entrepreneurship": "certificates/Nomu_AI_Workshop.pdf"
+};
 (function(){
   document.querySelectorAll('#cert-grid .cert-card').forEach(function(el){
-    el.href = CERT_PROOF_LINK;
+    var n = el.querySelector('.cert-n');
+    var key = n ? n.textContent.trim() : '';
+    el.href = CERT_PROOF_FILES[key] || CERT_PROOF_LINK;
   });
 })();
 
