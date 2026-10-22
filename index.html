@@ -1058,7 +1058,6 @@ var PHOTO_URL = "./pdp.jpg";
    in a new tab. If you'd rather link each certificate to its own individual
    proof file, replace this with an object keyed by certificate name and match
    it up in the loop below instead. */
-var CERT_PROOF_LINK = "https://1drv.ms/f/YOUR-ONEDRIVE-FOLDER-LINK-HERE";
 var CERT_PROOF_FILES = {
   "Docker Foundations": "certificates/Docker_Foundations.pdf",
   "Gen AI Productivity": "certificates/Gen_AI_Productivity.pdf",
@@ -1073,7 +1072,13 @@ var CERT_PROOF_FILES = {
   document.querySelectorAll('#cert-grid .cert-card').forEach(function(el){
     var n = el.querySelector('.cert-n');
     var key = n ? n.textContent.trim() : '';
-    el.href = CERT_PROOF_FILES[key] || CERT_PROOF_LINK;
+    if (CERT_PROOF_FILES[key]) {
+      el.href = CERT_PROOF_FILES[key];
+    } else {
+      el.removeAttribute('target');
+      el.removeAttribute('rel');
+      el.style.cursor = 'default';
+    }
   });
 })();
 
